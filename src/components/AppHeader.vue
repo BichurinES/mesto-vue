@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <router-link class="logo button" to="/"></router-link>
+    <router-link class="logo button" to="/mesto-vue"></router-link>
   </header>
 </template>
 
