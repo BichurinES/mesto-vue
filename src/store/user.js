@@ -90,7 +90,7 @@ export const userModule = {
         .catch((error) => commit('changeProfileFailed', error));
     },
     changeAvatar({ commit }, avatar) {
-      commit('changeAvatarRequest', avatar);
+      commit('changeAvatarRequest');
       api.changeAvatar(avatar)
         .then((user) => {
           commit('changeAvatarSuccess', user);

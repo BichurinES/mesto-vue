@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <router-link class="logo link" to="/"></router-link>
+    <router-link class="logo button" to="/"></router-link>
   </header>
 </template>
 
@@ -23,16 +23,16 @@
     background-repeat: no-repeat;
   }
 
-  @media screen and (min-width: 934px) {
-    .header {
-      padding: 45px 0 41px;
-    }
-  }
-
   @media screen and (min-width: 768px) {
     .logo {
       width: 142px;
       height: 33px;
+    }
+  }
+
+  @media screen and (min-width: 934px) {
+    .header {
+      padding: 45px 0 41px;
     }
   }
 </style>

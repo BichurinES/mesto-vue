@@ -11,7 +11,7 @@
         <button
           type="button"
           name="edit-button"
-          class="edit-button link"
+          class="edit-button button"
           @click="isEditFormOpen = true"
         ></button>
       </div>
@@ -20,7 +20,8 @@
     <button
       type="button"
       name="add-button"
-      class="add-button link"
+      class="add-button button"
+      @click="isAddCardFormOpen = true"
     ></button>
     <teleport to="#vue-modals">
       <transition name="fade">
@@ -28,6 +29,9 @@
       </transition>
       <transition name="fade">
         <ModalWithAvatarForm v-if="isAvatarFormOpen" :onClose="onAvatarFormClose" />
+      </transition>
+      <transition name="fade">
+        <ModalWithAddCardForm v-if="isAddCardFormOpen" :onClose="onAddCardFormClose" />
       </transition>
     </teleport>
   </section>
@@ -37,12 +41,14 @@
 import { mapState } from 'vuex';
 import ModalWithEditForm from '@/components/ModalWithEditForm.vue';
 import ModalWithAvatarForm from '@/components/ModalWithAvatarForm.vue';
+import ModalWithAddCardForm from '@/components/ModalWithAddCardForm.vue';
 
 export default {
   data() {
     return {
       isEditFormOpen: false,
       isAvatarFormOpen: false,
+      isAddCardFormOpen: false,
     };
   },
   methods: {
@@ -52,10 +58,14 @@ export default {
     onAvatarFormClose() {
       this.isAvatarFormOpen = false;
     },
+    onAddCardFormClose() {
+      this.isAddCardFormOpen = false;
+    },
   },
   components: {
     ModalWithEditForm,
     ModalWithAvatarForm,
+    ModalWithAddCardForm,
   },
   computed: {
     ...mapState({
@@ -89,53 +99,6 @@ export default {
     text-align: center;
   }
 
-  @media screen and (min-width: 425px) {
-    .profile {
-      flex-direction: row;
-      text-align: left;
-      width: 375px;
-    }
-  }
-
-  @media screen and (min-width: 768px) {
-    .profile {
-      width: 100%;
-    }
-  }
-
-  .add-button {
-    margin: 36px 16px 0;
-    width: 100%;
-    height: 50px;
-    padding: 0;
-    background-image: url('../assets/images/profile__add-button.svg');
-    outline: none;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 16px 16px;
-    border: 2px solid #FFFFFF;
-    box-sizing: border-box;
-    border-radius: 2px;
-    cursor: pointer;
-  }
-
-  @media screen and (min-width: 768px) {
-    .add-button {
-      width: 150px;
-      background-size: 22px 22px;
-      margin: 0;
-      margin-left: auto;
-      margin-right: 27px;
-    }
-  }
-
-  @media screen and (min-width: 934px) {
-    .add-button {
-      margin-right: 0;
-    }
-  }
-
   .avatar {
     position: relative;
     display: block;
@@ -150,24 +113,6 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     cursor: pointer;
-  }
-
-  @media screen and (min-width: 425px) {
-    .avatar {
-      margin-right: 30px;
-    }
-  }
-
-  @media screen and (min-width: 768px) {
-    .avatar {
-      margin-left: 27px;
-    }
-  }
-
-  @media screen and (min-width: 934px) {
-    .avatar {
-      margin-left: 0;
-    }
   }
 
   .avatar::before {
@@ -191,6 +136,24 @@ export default {
     background-repeat: no-repeat;
   }
 
+  .title-wrapper {
+    display: flex;
+    align-items: baseline;
+    padding-left: 27px;
+  }
+
+  .title {
+    margin: 27px auto 0;
+    max-width: 189px;
+    color: #fff;
+    font-size: 27px;
+    font-weight: 500;
+    line-height: 33px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
   .edit-button {
     margin-left: 10px;
     width: 18px;
@@ -198,23 +161,6 @@ export default {
     padding: 0;
     background-image: url('../assets/images/profile__edit-button.svg');
     background-size: contain;
-    outline: none;
-    background-color: transparent;
-    border: 0;
-    cursor: pointer;
-    transition: opacity .5s ease;
-  }
-
-  @media screen and (min-width: 768px) {
-    .edit-button {
-      margin-left: 18px;
-      width: 24px;
-      height: 24px;
-    }
-  }
-
-  .edit-button:hover {
-    opacity: .6;
   }
 
   .subtitle {
@@ -230,58 +176,86 @@ export default {
     overflow: hidden;
   }
 
+  .add-button {
+    margin-top: 36px;
+    width: 100%;
+    height: 50px;
+    padding: 0;
+    background-image: url('../assets/images/profile__add-button.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px 16px;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 2px;
+  }
+
   @media screen and (min-width: 425px) {
+    .profile {
+      flex-direction: row;
+      text-align: left;
+      width: 375px;
+    }
+
+    .avatar {
+      margin-right: 30px;
+    }
+
+    .title-wrapper {
+      padding-left: 0;
+    }
+
+    .title {
+      margin: 0;
+    }
+
     .subtitle {
       margin: 5px 0 0;
     }
   }
 
   @media screen and (min-width: 768px) {
-    .subtitle {
-      max-width: 400px;
-      font-size: 18px;
-      line-height: 22px;
+    .profile {
+      width: 100%;
     }
-  }
 
-  .title {
-    margin: 27px auto 0;
-    max-width: 189px;
-    color: #fff;
-    font-size: 27px;
-    font-weight: 500;
-    line-height: 33px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-
-  @media screen and (min-width: 425px) {
-    .title {
-      margin: 0;
+    .avatar {
+      margin-left: 27px;
     }
-  }
 
-  @media screen and (min-width: 768px) {
     .title {
       font-size: 42px;
       line-height: 48px;
       max-width: 450px;
     }
+
+    .edit-button {
+      margin-left: 18px;
+      width: 24px;
+      height: 24px;
+    }
+
+    .subtitle {
+      max-width: 400px;
+      font-size: 18px;
+      line-height: 22px;
+    }
+
+    .add-button {
+      width: 150px;
+      background-size: 22px 22px;
+      margin-left: auto;
+      margin-right: 27px;
+    }
   }
 
-  .title-wrapper {
-    display: flex;
-    align-items: baseline;
-    padding-left: 27px;
-  }
+  @media screen and (min-width: 934px) {
+    .avatar {
+      margin-left: 0;
+    }
 
-  @media screen and (min-width: 425px) {
-    .title-wrapper {
-      padding-left: 0;
+    .add-button {
+      margin-right: 0;
     }
   }
 </style>
